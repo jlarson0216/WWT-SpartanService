@@ -10,7 +10,7 @@
 		Please Wait, Logging In...
 		<?php
 		
-			$usrName=$_GET["userName"];
+			$usrName=$_POST["userName"];
 			
 			if(strpos($usrName," ") != False)
 			{
@@ -19,62 +19,104 @@
 				exit();
 			}
 			
-			$password=$_GET["password"];
+			$password=$_POST["password"];
 			
 			if(strpos($password," ") != False)
 			{
 				echo "Invalid Password.";
 				
 				exit();
-			}
-			
-			//$password=password_hash($password,"sha1");   //I am not sure if we will be using this or not. //this is where password hashing is done, I have not implemented salting, but maybe it should be, I honestly don't know
+			}		
+			//$password=password_hash($password,"sha1");   //I am not sure if we will be using this or not.
 			
 			setcookie("DesmetPassword",$password,time()+600,true);
 			setcookie("DesmetUserName",$usrName,time()+600,true);
 			
-				
-			$servername="127.0.0.1";
-			$username="root";
-			$password="";
-			$dbname="sparta";
+			$servername = "127.0.0.1";
+			$username = "root";
+			$password = "";
+			$dbname = "sparta";
+			// Create connection
+			$conn = mysqli_connect($servername, $username, $password, $dbname);
+			// Check connection
+			if (!$conn) {
+				 die("Connection failed: " . mysqli_connect_error());
+				 
+				 
+}
+	if ($stmt = mysqli_prepare($conn, "SELECT UT_Id FROM users WHERE DeSmet_ID=? AND Pass=?;")) {
+    //$sql="SELECT * FROM users WHERE U_Id=? AND Pass=?"
+    /* bind parameters for markers */
+    mysqli_stmt_bind_param($stmt, "ss", $usrName, $password);
+
+	
+    mysqli_stmt_execute($stmt);
+
+    /* bind variables to prepared statement */
+    mysqli_stmt_bind_result($stmt, $result);
+
+	$rows = array();
+	print_r($result);
+    /* fetch values */
+    while (mysqli_stmt_fetch($stmt)) {
+        printf("%s\n", $result);
+		array_unshift($rows, $result);
+	 
+    }
+	
+
+    /* close statement */
+    mysqli_stmt_close($stmt);
+
+}
+/*
+    
+    mysqli_stmt_execute($stmt);
+
+  
+    mysqli_stmt_bind_result($stmt, $result);
+
+   
+    mysqli_stmt_fetch($stmt);
+
+    
+    mysqli_stmt_close($stmt);
+*/
+
+
+else{
+echo "cool";
+}
+			//$dbh=mysqli_connect("127.0.0.1","root","","sparta");
+			/*$sql=mysqli_prepare($conn, "SELECT * FROM User WHERE U_Id=? AND Pass=?");
 			
-			$dbh=new mysqli_connect($servername,$username,$password,$dbname);
+			mysqli_stmt_bind_param($sql, 'ss', $usrName, $password);
 			
-			if (!$conn)
+			$result=mysql_query($conn, $sql);
+			
+			$conn->close();
+			*/
+			echo "1";
+			print_r($rows);
+			echo "2";
+			
+			if(count($rows) == 0)
 			{
-				die("Connection failed: " . mysqli_connect_error());
-			}
-			
-			$loginStatement="SELECT * FROM Users WHERE U_Id=".$usrName.", Pass=".$password.";";
-			
-			$result=mysql_query($loginStatement);
-			
-			mysqli_close($dbh);
-			
-			if(mysqli_num_rows($result) <= 0)
-			{
-				echo "<marquee>Not a valid user.</marquee>";
+				echo "Not a valid user.";
 				
 				exit();
 			}
-			else if(mysqli_num_rows($result) == 1 )
+			else if(count($rows) == 1)
 			{
-				$row=mysqli_fetch_assoc($result);
+				//$row=$result->fetch_assoc();
 				
-				if($row["date_deleted"] == NULL)
-				{
-					setcookie("DS_U_Id",$row["U_Id"],time()+600,true);
-					setcookie("DeSmet_Id",$row["DeSmet_Id"],time()+600,true);
-					setcookie("DS_LastName",$row["LastName"],time()+600,true);
-					setcookie("DS_FirstName",$row["FirstName"],time()+600,true);
-					setcookie("DS_UT_Id",$row["UT_Id"],time()+600,true);
-					setcookie("DS_A_Id",$row["A_Id"],time()+600,true);
-					setcookie("DS_Email",$row["Email"],time()+600,true);
-					setcookie("DS_Phone",$row["Phone"],time()+600,true);
-					#setcookie("DS_Pass",$row["Pass"],time()+600,true); //I don't think we will need it but just in case
-					#setcookie("DS_Salt",$row["Salt"],time()+600,true); //I don't think we will need it but just in case
-				}
+				setcookie("DesmetUserTypeID",$rows,time()+600,true);
+				//setcookie("DesmetEmail",$row["Email"],time()+600,true);
+				//setcookie("DesmetPhoneNum",$row["Phone"],time()+600,true);
+				//setcookie("DesmetFirstName",$row["firstName"],time()+600,true);
+				//setcookie("DesmetLastName",$row["lastName"],time()+600,true);
+				//setcookie("DesmetAddressId",$row["A_Id"],time()+600,true);
+				setcookie("DesmetUserLoggedIn","true",time()+600,true);
 				
 				exit();
 			}
