@@ -13,6 +13,12 @@
 </head>
 
 <body>
+<?php
+if(!isset($_COOKIE["DS_U_Id"]))
+{
+    header( 'Location: login.php' ) ;
+}
+?>
 <div class="container-fluid">
 
 	<div class="row banner">
@@ -34,9 +40,14 @@
 				<li class="active"><a href="index.php">Home</a></li>
 				<li><a href="Service.php">Service Projects</a></li>
 				<li><a href="MyProfile.php">My Profile</a></li>
+				<?php
+					if ($_COOKIE["DS_UserTypeID"] == 2)
+					print "<li><a href='addevent.php'>Add Event</a></li>";
+				?>
 			</ul> 
 			<br>
-			
+		
+<!--		
 		<form>
 		<div class="input-group">
 			<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -47,6 +58,7 @@
 			<input id="password" type="password" class="form-control" name="password" placeholder="Password">
 		</div>
 		</form>
+	-->
 
 		<br>
 			
@@ -56,6 +68,12 @@
 			<div class="container-fluid">
 				<h1> Welcome!</h1>
 				test
+				<?php
+					echo $_COOKIE["DS_U_Id"];
+					echo $_COOKIE["DS_Password"];
+					echo $_COOKIE["DS_UserTypeID"];
+					echo $_COOKIE["DS_UserID"];
+				?>
 				 
 				  
 		  

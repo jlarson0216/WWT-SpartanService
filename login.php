@@ -67,7 +67,7 @@ if (!$conn) {
 					<input type="userName" class="form-control" name="userName" id="userName">
 				  </div>
 				  <div class="form-group">
-					<label for="pwd">Password:</label>
+					<label for="password">Password:</label>
 					<input type="password" class="form-control" name="password" id="password">
 				  </div>
 				  <button type="submit" class="btn btn-default">Submit</button>
