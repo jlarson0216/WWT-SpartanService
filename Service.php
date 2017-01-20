@@ -12,8 +12,19 @@
 </head>
 
 <body>
+<?php
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "sparta";
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+     die("Connection failed: " . mysqli_connect_error());
+}
+?>
 <div class="container-fluid">
-
 
 	<div class="well well-sm">
 		<div class="container-fluid">
@@ -38,44 +49,114 @@
 				<li><a href="index.php">Home</a></li>
 				<li class="active"><a href="Service.php">Service Projects</a></li>
 				<li><a href="MyProfile.php">My Profile</a></li>
-			</ul> 
+			</ul>
 		</div>
 
 		<div class="col-sm-10 col-md-10 col-lg-10"> 
 			<div class="container-fluid">
 				<h1> Service Projects</h1>
 				
+				<!--<table style="width:100%">
+  <tr>
+  
+    <th>Provider</th>
+    <th>Time</th> 
+    <th>Event Name</th>
+    <th>Location</th>
+    <th>Description </th>
+                </tr>
+  <tr>
+                <th><?php
+				echo "balls"
+				?></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>
+  <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+  </tr>  
+  </table>-->
+<?php
+  $sql = "SELECT s_events.SE_Name, address.A_Name, s_events.Description, s_events.SE_ID, address.Street, address.city, address.Zip FROM s_events Join address ON s_events.A_Id=address.A_Id";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo "<table style='width:100%' border='1'>
+  
+  <tr>
+  
+    <th>Provider</th>
+    <th>Location</th>
+    <th>Work Type</th>
+    <th>Description</th>
+                </tr>";
+    // output data of each row
+    while($row = $result->fetch_assoc()) 
+	{
+        echo "<tr><td><a href = 'Service.php?sid=".$row["SE_ID"]."'>".$row["A_Name"]."</a></td><td>".$row["Street"].", ".$row["city"]."  ".$row["Zip"]."</td><td>".$row["SE_Name"]."</td><td>".$row["Description"]."</td></tr>";
+    }
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+?>
+
 				
-				<?php
-			
-				$servername = "127.0.0.1";
-				$username = "root";
-				$password = "";
-				$dbname = "sparta";
-				// Create connection
-				$conn = mysqli_connect($servername, $username, $password, $dbname);
-				// Check connection
-				if (!$conn) {
-					die("Connection failed: " . mysqli_connect_error());
-				}
-				$sql = "SELECT S_Events.SE_Name, S_Events.Description, Address.A_Name, Address.Street, Address.City, Address.State, Address.Zip
-						FROM S_Events
-						Join Address
-						ON S_Events.A_Id=Address.A_Id;";
-				$result = mysqli_query($conn, $sql);
-				if (mysqli_num_rows($result) > 0) {
-					// output data of each row
-					while($row = mysqli_fetch_assoc($result)) {
-						echo "Name: " . $row["SE_Name"] . "<br>";
-						echo "Description: " . $row["Description"] . "<br>";
-						echo "Address: " . $row["Street"] . " " . $row["City"] . " " . $row["State"] . " " . $row["Zip"] . "<br>" . "<br>";
-					}
-				} else {
-					echo "0 results";
-				}
-				mysqli_close($conn);
-				
-				?>
 				
 				
 			</div>
@@ -94,13 +175,13 @@
 	</div>
 	<div class="col-sm-2">
 		<img src="Media/SHs.png" alt="De Smet Logo" class="img-responsive" height=80px align=center>
-	</div>	
+	</div>
 </div>
 </footer>
 
 </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   
 </body>
