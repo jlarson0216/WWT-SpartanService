@@ -40,7 +40,7 @@
 			
 			$A_Id=$row["A_Id"];
 			
-			$statement="INSERT INTO S_Event (SE_Name,U_Id,A_Id,Description) VALUES(".$nameEvent.",".$_COOKIE["DS_U_Id"].",".$A_Id.",".$eventDescription.");";
+			$statement="INSERT INTO S_Event (SE_Name,U_Id,A_Id,Description) VALUES(".$nameEvent.",".$_COOKIE["DS_UserID"].",".$A_Id.",".$eventDescription.");";
 			
 			$result=mysql_query($statement);
 			
