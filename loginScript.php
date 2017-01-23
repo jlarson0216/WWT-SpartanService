@@ -45,55 +45,6 @@
 			}
 	$sql = "SELECT U_Id, UT_Id FROM users WHERE DeSmet_ID='".$usrName."' AND Pass='".$password."';";
 	$result = mysqli_query($conn, $sql);
-	
-	//if ($stmt = mysqli_prepare($conn, $sql))
-    //$sql="SELECT * FROM users WHERE U_Id=? AND Pass=?"
-    /* bind parameters for markers */
-    //mysqli_stmt_bind_param($stmt, "ss", $usrName, $password);
-    //mysqli_stmt_execute($stmt);
-    //mysqli_stmt_bind_result($stmt, $result);
-
-	//$rows = array();
-	//print_r($result);
-    /* fetch values */
-    //while($row = mysqli_fetch_assoc($result)) {
-    //    printf("%s\n", $result);
-	//	array_unshift($rows, $row);
-    //}
-	
-
-    //mysqli_stmt_close($stmt);
-
-/*
-    
-    mysqli_stmt_execute($stmt);
-
-  
-    mysqli_stmt_bind_result($stmt, $result);
-
-   
-    mysqli_stmt_fetch($stmt);
-
-    
-    mysqli_stmt_close($stmt);
-*/
-
-
-//else{
-//echo "cool";
-//}
-			//$dbh=mysqli_connect("127.0.0.1","root","","sparta");
-			/*$sql=mysqli_prepare($conn, "SELECT * FROM User WHERE U_Id=? AND Pass=?");
-			
-			mysqli_stmt_bind_param($sql, 'ss', $usrName, $password);
-			
-			$result=mysql_query($conn, $sql);
-			
-			$conn->close();
-			*/
-			//echo "1";
-			//print_r($result);
-			//echo "2";
 			
 			if($result->num_rows == 0)
 			{
