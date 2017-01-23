@@ -30,7 +30,7 @@
 			//$password=password_hash($password,"sha1");   //I am not sure if we will be using this or not.
 			
 			setcookie("DS_Password",$password,time()+600,true);
-			setcookie("DS_U_Id",$usrName,time()+600,true);
+			setcookie("DS_UserName",$usrName,time()+600,true);
 			
 			$servername = "127.0.0.1";
 			$username = "root";
