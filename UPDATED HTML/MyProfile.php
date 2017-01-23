@@ -13,7 +13,7 @@
 
 <body>
 <?php
-if(!isset($_COOKIE["DS_U_Id"]))
+if(!isset($_COOKIE["DS_UserID"]))
 {
 	header( 'Location: login.php' ) ;
 }
