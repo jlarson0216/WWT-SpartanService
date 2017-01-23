@@ -37,6 +37,10 @@
 				<li class="active"><a href="index.php">Home</a></li>
 				<li><a href="Service.php">Service Projects</a></li>
 				<li><a href="MyProfile.php">My Profile</a></li>
+				<?php
+					if ($_COOKIE["DS_UserTypeID"] == 2 or $_COOKIE["DS_UserTypeID"] == 0)
+					print "<li><a href='addevent.php'>Add Event</a></li>";
+				?>
 			</ul> 
 			<br>
 		<br>
