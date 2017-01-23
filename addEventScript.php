@@ -8,18 +8,18 @@
 	
 	<body>
 		<?php
-		if(isset($_COOKIE["DS_U_Id"]))
+		if(isset($_COOKIE["DS_UserID"]))
 		{
-			$nameEvent=$_GET["nameEvent"];
-			$eventDescription=$_GET["eventDescription"];
-			$street=$_GET["street"];
-			$city=$_GET["city"];
-			$state=$_GET["state"];
-			$zip=$_GET["zip"];
-			$eventStart=$_GET["eventStart"];
-			$eventEnd=$_GET["eventEnd"];
-			$quantity=$_GET["quantity"];
-			$addressName=$_GET["addName"];
+			$nameEvent=$_POST["nameEvent"];
+			$eventDescription=$_POST["eventDescription"];
+			$street=$_POST["street"];
+			$city=$_POST["city"];
+			$state=$_POST["state"];
+			$zip=$_POST["zip"];
+			$eventStart=$_POST["eventStart"];
+			$eventEnd=$_POST["eventEnd"];
+			$quantity=$_POST["quantity"];
+			$addressName=$_POST["addName"];
 			
 			$servername="127.0.0.1";
 			$username="root";
