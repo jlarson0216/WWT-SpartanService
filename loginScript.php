@@ -107,11 +107,11 @@
 				
 				setcookie("DS_UserTypeID",$row["UT_Id"],time()+600,true);
 				setcookie("DS_UserID",$row["U_Id"],time()+600,true);
-				//setcookie("DesmetEmail",$row["Email"],time()+600,true);
-				//setcookie("DesmetPhoneNum",$row["Phone"],time()+600,true);
-				//setcookie("DesmetFirstName",$row["firstName"],time()+600,true);
-				//setcookie("DesmetLastName",$row["lastName"],time()+600,true);
-				//setcookie("DesmetAddressId",$row["A_Id"],time()+600,true);
+				setcookie("DesmetEmail",$row["Email"],time()+600,true);
+				setcookie("DesmetPhoneNum",$row["Phone"],time()+600,true);
+				setcookie("DesmetFirstName",$row["firstName"],time()+600,true);
+				setcookie("DesmetLastName",$row["lastName"],time()+600,true);
+				setcookie("DesmetAddressId",$row["A_Id"],time()+600,true);
 				setcookie("DesmetUserLoggedIn","true",time()+600,true);
 				echo "Logged in successfully!";
 				header( 'Location: index.php' ) ;
