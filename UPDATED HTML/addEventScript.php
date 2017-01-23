@@ -8,7 +8,7 @@
 	
 	<body>
 		<?php
-		if(isset($_COOKIE["DS_U_Id"]))
+		if(isset($_COOKIE["DS_UserID"]))
 		{
 			$nameEvent=$_POST["nameEvent"];
 			$eventDescription=$_POST["eventDescription"];
