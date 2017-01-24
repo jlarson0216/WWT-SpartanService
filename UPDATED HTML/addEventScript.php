@@ -27,37 +27,43 @@
 			$dbname="sparta";
 			
 			$dbh= mysqli_connect($servername,$username,$password,$dbname);
-			$statement="INSERT INTO address (A_Name, Street, City, State, Zip) VALUES (".$addressName.",".$street.",".$city.",".$state.",".$zip.");";
 			
-			$result=mysql_query($statement);
+			$statement="INSERT INTO address (A_Name, Street, City, State, Zip) VALUES ('".$addressName."','".$street."','".$city."','".$state."',".$zip.");";
+			
+			$result=mysqli_query($dbh, $statement);
 			
 			//query to get A_Id
-			$statement="SELECT A_Id FROM address WHERE A_Name=".$addressName.";";
+			//$statement="SELECT A_Id FROM address WHERE A_Name='".$addressName."';";
+						
+			//$result=mysqli_query($dbh,$statement);
 			
-			$result=mysql_query($statement);
+			//$row=mysqli_fetch_assoc($result);
 			
-			$row=mysqli_fetch_assoc($result);
+			//$A_Id=$row["A_Id"];
+			$A_Id=mysqli_insert_id($dbh);
 			
-			$A_Id=$row["A_Id"];
+			$statement="INSERT INTO S_Events (SE_Name,U_Id,A_Id,Description) VALUES ('".$nameEvent."',".$_COOKIE["DS_UserID"].",".$A_Id.",'".$eventDescription."');";
 			
-			$statement="INSERT INTO S_Event (SE_Name,U_Id,A_Id,Description) VALUES(".$nameEvent.",".$_COOKIE["DS_UserID"].",".$A_Id.",".$eventDescription.");";
-			
-			$result=mysql_query($statement);
+			$result=mysqli_query($dbh, $statement);
 			
 			//query to get SE_Id
-			$statement="SELECT SE_Id FROM S_Event WHERE SE_Name=".$nameEvent.";";
+			//$statement="SELECT SE_Id FROM S_Event WHERE SE_Name='".$nameEvent."';";
 			
-			$result=mysql_query($statement);
+			//$result=mysqli_query($dbh, $statement);
+
+			//$row=mysqli_fetch_assoc($result);
 			
-			$row=mysqli_fetch_assoc($result);
+			//$SE_Id=$row["SE_Id"];
+			$SE_Id=mysqli_insert_id($dbh);
 			
-			$SE_Id=$row["SE_Id"];
+			$statement="INSERT INTO S_Events_Time (SE_ID, StartTime, EndTime, Volunteers) VALUES(".$SE_Id.",'".$eventStart."','".$eventEnd."',".$quantity.");";
 			
-			$statement="INSERT INTO S_Event_Time (SE_ID, StartTime, EndTime, Volunteers) VALUES(".$SE_Id.",".$eventStart.",".$eventEnd.",".$quantity.");";
-			
-			$result=mysql_query($statement);
+			$result=mysqli_query($dbh, $statement);
 			
 			mysqli_close($dbh);
+			echo "Event Added Successfully";
+			header( 'Location: index.php' ) ;
+			exit();
 		}
 		else
 		{
