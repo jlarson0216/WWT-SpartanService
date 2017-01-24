@@ -15,9 +15,8 @@
 <?php
 if(!isset($_COOKIE["DS_UserID"]))
 {
-	header( 'Location: login.php' ) ;
+	header( 'Location: login.php' );
 }
-
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
@@ -56,120 +55,69 @@ if (!$conn) {
 				<li><a href="MyProfile.php">My Profile</a></li>
 			</ul>
 		</div>
-
-		<div class="col-sm-10 col-md-10 col-lg-10"> 
-			<div class="container-fluid">
-				<h1> Service Projects</h1>
+		
+		
 				
-				<!--<table style="width:100%">
-  <tr>
-  
-    <th>Provider</th>
-    <th>Time</th> 
-    <th>Event Name</th>
-    <th>Location</th>
-    <th>Description </th>
-                </tr>
-  <tr>
-                <th><?php
-				echo "balls"
-				?></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>
-  <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-  </tr>  
-  </table>-->
 <?php
-  $sql = "SELECT s_events.SE_Id, s_events.SE_Name, address.A_Name, s_events.Description, address.Street, address.city, address.Zip FROM s_events Join address ON s_events.A_Id=address.A_Id";
-$result = $conn->query($sql);
-
-
+	
+  $sql = "SELECT S_Events.SE_Id, S_Events.SE_Name, S_Events.Description, Address.A_Name, Address.Street, Address.City, Address.State, Address.Zip
+		  FROM S_Events
+		  Join Address
+		  ON S_Events.A_Id=Address.A_Id
+		  Where s_events.SE_Id = ".$_GET['sid'].";";
+  $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "<table style='width:100%' border='1'>
-  <tr>
-  
-    <th>Provider</th>
-    <th>Location</th>
-    <th>Work Type</th>
-    <th>Description</th>
-                </tr>";
+    //echo "<table style='width:100%' border='1'>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
-		$Desc = $row["Description"];
-		if(strlen($Desc)>45)
-		{
-			$Desc = substr($Desc,0,45)." ...";
-		}
-		echo "<tr><td align='center'><a href = 'Signup.php?sid=".$row["SE_Id"]."'>".$row["A_Name"]."</a></td><td align='center'>".$row["Street"].", ".$row["city"]."  ".$row["Zip"]."</td><td align='center'>".$row["SE_Name"]."</td><td>".$Desc."</td></tr>";
+		
+		echo "<div class='col-sm-10 col-md-10 col-lg-10'>";
+		echo "<div class='container-fluid'>";
+		echo "<h1>" . $row["SE_Name"] . "</h1>";
+		
+		echo $row["Description"] . "<br>";
+		echo $row["A_Name"] . ", " . $row["Street"] . " " . $row["City"] . " " . $row["State"] . ", " . $row["Zip"] . "<br>";
+		
+		
+		//echo "We Need: " . $row["Volunteers"] . " Volunteers.";
+		
+		
     }
+    //echo "</table>";
+} else {
+    echo "0 results";
+}
+
+
+
+
+
+
+
+  $sql = "SELECT S_Events_Time.StartTime, S_Events_Time.EndTime, S_Events_Time.SET_Id
+		  FROM S_Events_Time
+		  WHERE S_Events_Time.SE_Id = ".$_GET['sid'].";";
+  $result = $conn->query($sql);
+  $mySid = $_GET["sid"];
+    
+  if ($result->num_rows> 0) {
+    echo "<table style='width:100%' border='1'>";
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+		$mySet = $row["SET_Id"];
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td align='center'><a href='Signup.php?sid=".$mySid."&set=".$mySet."'>Signup!</a></td></tr>";
+	
+	}
     echo "</table>";
 } else {
     echo "0 results";
 }
+	echo "<br>";
 ?>
 
 				
-				
-				
-			</div>
+			</div>	
 		</div>
 	</div> 
 	
