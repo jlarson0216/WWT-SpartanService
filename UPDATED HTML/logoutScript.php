@@ -10,7 +10,7 @@
 		Please Wait, Logging Out...
 		<?php
 		
-			setcookie( "DesmetPassword" , "" , time() - 3600);
+			#setcookie( "DesmetPassword" , "" , time() - 3600);
 			setcookie( "DesmetUserName" , "" , time() - 3600);
 			setcookie( "DS_U_Id" , "" , time() - 3600);
 			setcookie( "DeSmet_Id" , "" , time() - 3600);
