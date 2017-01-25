@@ -49,7 +49,7 @@
 			if($result->num_rows == 0)
 			{
 				echo "Not a valid user.";
-				
+				header( 'Location: login.php?error=1' );
 				exit();
 			}
 			else if($result->num_rows == 1)
