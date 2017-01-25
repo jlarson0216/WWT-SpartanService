@@ -10,18 +10,15 @@
 		Please Wait, Logging Out...
 		<?php
 		
-			#setcookie( "DesmetPassword" , "" , time() - 3600);
-			setcookie( "DesmetUserName" , "" , time() - 3600);
-			setcookie( "DS_U_Id" , "" , time() - 3600);
-			setcookie( "DeSmet_Id" , "" , time() - 3600);
-			setcookie( "DS_LastName" , "" , time() - 3600);
-			setcookie( "DS_FirstName" , "" , time() - 3600);
-			setcookie( "DS_UT_Id" , "" , time() - 3600);
-			setcookie( "DS_A_Id" , "" , time() - 3600);
-			setcookie( "DS_Email" , "" , time() - 3600);
-			setcookie( "DS_Phone" , "" , time() - 3600);
-			#setcookie( "DS_Pass" , "" , time() - 3600);
-			#setcookie( "DS_Salt" , "" , time() - 3600);
+			#setcookie( "DS_Password" , "" , time() - 3600);
+			setcookie( "DS_UserTypeID" , "" , time() - 3600);
+			setcookie( "DS_UserID" , "" , time() - 3600);
+			setcookie( "DesmetEmail" , "" , time() - 3600);
+			setcookie( "DesmetPhoneNum" , "" , time() - 3600);
+			setcookie( "DesmetFirstName" , "" , time() - 3600);
+			setcookie( "DesmetLastName" , "" , time() - 3600);
+			setcookie( "DesmetAddressId" , "" , time() - 3600);
+			setcookie( "DesmetUserLoggedIn" , "" , time() - 3600);
 			
 			echo "Logged Out.";
 			
