@@ -72,7 +72,7 @@
 			else
 			{
 				echo "Multiple users fit the discription, unable to login.";
-				
+				header( 'Location: login.php?error=1' );
 				exit();
 			}
 		
