@@ -11,13 +11,57 @@
   <link rel="stylesheet" href="css/SpartanCSS.css">
 </head>
 
-<body>
+<body> 
+
+
+<?php
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "sparta";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+     die("Connection failed: " . mysqli_connect_error());
+}
+
+$user = $_COOKIE["DS_UserID"]; //$_COOKIE["DS_U_Id"];
+$sql = "Select * from Users Where U_ID = $user"; //originally U_ID = " . $user;
+
+$result = mysqli_query($conn, $sql);
+
+
+
+if (mysqli_num_rows($result) > 0) 
+{
+	while($row=mysqli_fetch_assoc($result)) 
+	{
+		$Fname = $row["FirstName"];
+		$Lname = $row["LastName"];
+		$Username = $row["DeSmet_ID"];
+		$email= $row["Email"];
+		$phonenumber = $row["Phone"];
+		$servicehours = 'Needs Working';
+		$eventname = 'Needs Working';
+		
+	}	
+}
+else 
+{
+	echo "You have failed to create correct code.";
+}
+ mysqli_close($conn);
+?>
+
 <?php
 if(!isset($_COOKIE["DS_UserID"]))
 {
-	header( 'Location: login.php' ) ;
+                header( 'Location: login.php' ) ;
 }
 ?>
+
 <div class="container-fluid">
 
 
@@ -44,13 +88,7 @@ if(!isset($_COOKIE["DS_UserID"]))
 				<li><a href="index.php">Home</a></li>
 				<li><a href="Service.php">Service Projects</a></li>
 				<li class="active"><a href="MyProfile.php">My Profile</a></li>
-				<?php
-					if ($_COOKIE["DS_UserTypeID"] == 2 or $_COOKIE["DS_UserTypeID"] == 0)
-					print "<li><a href='addevent.php'>Add Event</a></li>";
-				?>
 			</ul> 
-			<br>
-			<br>
 		</div>
 
 		<div class="col-sm-10 col-md-10 col-lg-10"> 
@@ -58,50 +96,117 @@ if(!isset($_COOKIE["DS_UserID"]))
 				
 				<h1> <u>My Profile</u> </h1>
 			
-			<h2> Welcome John Doe <h2>
-			<h4> Your Current Progress: </h4>
-			<div class="progress">
-				<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%"> 50%
-				</div>
-			</div>
+			<h2> <?php
+			echo 'Welcome, ' . "$Fname" . " " . "$Lname";
+				?>
+				<h2>
+			<h4></h4>
+		
 			<div class="table-responsive">          
   <table class="table">
     <thead>
       <tr>
 		<th>Name</th>
-        <th>Year</th>
-        <th>Hours</th>
-        <th>Hours per Project</th>
+		<th>Username</th>
+		<th>Email</th>
+		<th>Phone Number</th>
+        <th>Projects</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-<?php
+        <td>
+			<?php
+				echo "$Fname" . " " . "$Lname";
+			?>
+			<!---
+			<?php
+			
+	echo $_COOKIE["DS_UserName"];
+	echo $_COOKIE["DS_Password"];
+	echo $_COOKIE["DS_UserTypeID"];
+	echo $_COOKIE["DS_UserID"];
+	
+			?>
+			--->
+			
+		
+		</td>
+		<td> 
+		<?php
+		echo "$Username"
+		?>
+		</td>
+        <td>
+			<?php
+				echo "$email";
+			?>
+		</td>
+        <td>
+			<?php
+				echo "$phonenumber";
+			?>
+		</td>
+        <td>
+		<?php
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "sparta";
+
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$conn) {
      die("Connection failed: " . mysqli_connect_error());
 }
-$sql = "Select * from Users WHERE U_Id = 1";
-$result = mysqli_query($conn, $sql);
-if (mysqli_num_rows($result) > 0) {
-     // output data of each row
-     while($row = mysqli_fetch_assoc($result)) {
-         echo "<td>" . $row["FirstName"]. " " . $row["LastName"]. "</td>";
-     }
-} else {
-     echo "0 results";
+
+$sql="SELECT SET_Id FROM signups WHERE U_Id='".$user."';";
+$result = mysqli_query($conn,$sql);
+
+//for
+
+?>
+<?php
+$servername = "127.0.0.1";
+$username = "root";
+$password = "";
+$dbname = "sparta";
+
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Check connection
+if (!$conn) {
+     die("Connection failed: " . mysqli_connect_error());
 }
-mysqli_close($conn);
-?>  
-        <td>Sophomore</td>
-        <td>12</td>
-        <td>Christmas on Campus: 5<br> Habitat for Humanity: 7</td>
+
+$user= $_COOKIE["DS_UserID"];
+$sql="SELECT SET_Id FROM signups WHERE U_Id='".$user."';";
+$result = mysqli_query($conn,$sql);
+
+for($i=0;$i<$result->num_rows;$i=$i+1)
+{
+	$row=$result->fetch_assoc();
+	$SET_Id=$row["SET_Id"];
+	
+	$sql2="SELECT SE_ID FROM S_Events_Time WHERE SET_Id='".$SET_Id."';";
+	$result2 = mysqli_query($conn,$sql2);
+	$row2=$result2->fetch_assoc();
+	$SE_ID=$row2["SE_ID"];
+	
+	$sql3="SELECT SE_Name FROM s_events WHERE SE_Id='".$SE_ID."';";
+	$result3 = mysqli_query($conn,$sql3);
+	$row3=$result3->fetch_assoc();
+	$SE_Name=$row3["SE_Name"];
+	echo "$SE_Name" . "<br>";
+}
+
+?>
+		
+		</td>
+		
+		
+		
       </tr>
     </tbody>
   </table>
@@ -132,10 +237,7 @@ mysqli_close($conn);
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>	
   <script src="js/bootstrap.min.js"></script>
+ 
   
 </body>
 </html>
-
-
-
-
