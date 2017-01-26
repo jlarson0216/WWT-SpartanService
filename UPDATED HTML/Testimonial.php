@@ -59,41 +59,18 @@ if (!$conn) {
 
 		<div class="col-sm-10 col-md-10 col-lg-10"> 
 			<div class="container-fluid">
-				<h1> Service Projects</h1>
+				<h1> Give Feedback:</h1>
 				
-<?php
-	
-	//echo date("Y-m-d h:i:sa");
-  $sql = "SELECT s_events.SE_Id, s_events.SE_Name, address.A_Name, s_events.Description, address.Street, address.city, address.Zip FROM s_events Join address ON s_events.A_Id=address.A_Id";
-$result = $conn->query($sql);
-
-
-
-if ($result->num_rows > 0) {
-    echo "<table style='width:100%' border='1'>
-  <tr>
-  
-    <th>Provider</th>
-    <th>Location</th>
-    <th>Work Type</th>
-    <th>Description</th>
-                </tr>";
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-		$Desc = $row["Description"];
-		if(strlen($Desc)>45)
-		{
-			$Desc = substr($Desc,0,45)." ...";
-		}
-		echo "<tr><td align='center'><a href = 'Signup.php?sid=".$row["SE_Id"]."'>".$row["A_Name"]."</a></td><td align='center'>".$row["Street"].", ".$row["city"]."  ".$row["Zip"]."</td><td align='center'>".$row["SE_Name"]."</td><td>".$Desc."</td></tr>";
-    }
-    echo "</table>";
-} else {
-    echo "0 results";
-}
-echo "<br>";
-?>
-
+				<?php
+					echo "Max Character Length: 255";
+					$mySet=$_GET["set"];
+					echo "<form action='AddTest.php?set=".$mySet."' method='post'>";
+				?>
+				
+				<textarea type="text" rows="4" cols="40" name="Test" placeholder="Write Comments Here"></textarea><br>
+				<input type="submit" value="Submit"></input>
+				</form>
+				<br>
 				
 				
 				

@@ -90,30 +90,52 @@ if ($result->num_rows > 0) {
 }
 
 
+//break
 
+	$mySid = $_GET["sid"];
 
-
-
-
-  $sql = "SELECT S_Events_Time.StartTime, S_Events_Time.EndTime, S_Events_Time.SET_Id
+  $sql = "SELECT S_Events_Time.StartTime, S_Events_Time.EndTime, S_Events_Time.SET_Id, S_Events_Time.Volunteers
 		  FROM S_Events_Time
-		  WHERE S_Events_Time.SE_Id = ".$_GET['sid'].";";
-  $result = $conn->query($sql);
-  $mySid = $_GET["sid"];
-    
+		  WHERE S_Events_Time.SE_Id = ".$mySid.";";
+  $result = mysqli_query($conn,$sql);
+  
   if ($result->num_rows> 0) {
     echo "<table style='width:100%' border='1'>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
+		
 		$mySet = $row["SET_Id"];
-		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td align='center'><a href='Signup.php?sid=".$mySid."&set=".$mySet."'>Signup!</a></td></tr>";
-	
+		$sql2="SELECT Signups.SET_Id
+			   FROM Signups
+			   WHERE Signups.SET_Id=".$mySet.";";
+		$result2 = $conn->query($sql2);
+		$signedUp = $result2->num_rows;
+		if($_COOKIE["DS_UserTypeID"] == 1){
+		$openSlots = intval($row["Volunteers"]);
+		if($openSlots > $signedUp)
+		{
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'><a href='SignupScript.php?sid=".$mySid."&set=".$mySet."'>Signup!</a></td></tr>";
+		} else
+		{
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'>Signup!</td></tr>";
+		}
+		
+		
+		
+		} else {
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td align='center'><a href='Testimonial.php?set=".$mySet."'>Write Comments</a></td></tr>";
+		}
+		
+		//echo $row["message"] . "<br>";
+		
+		
 	}
     echo "</table>";
 } else {
     echo "0 results";
 }
 	echo "<br>";
+	
 ?>
 
 				
