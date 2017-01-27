@@ -130,8 +130,9 @@ if ($result->num_rows > 0) {
 			   WHERE Signups.SET_Id=".$mySet.";";
 		$result2 = $conn->query($sql2);
 		$signedUp = $result2->num_rows;
+	    	$openSlots = intval($row["Volunteers"]);
 		if($_COOKIE["DS_UserTypeID"] == 1){
-		$openSlots = intval($row["Volunteers"]);
+
 		if($openSlots > $signedUp)
 		{
 		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'><a href='SignupScript.php?sid=".$mySid."&set=".$mySet."'>Signup!</a></td></tr>";
@@ -143,7 +144,7 @@ if ($result->num_rows > 0) {
 		
 		
 		} else {
-		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td align='center'><a href='Testimonial.php?set=".$mySet."'>Write Comments</a></td></tr>";
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'><a href='Testimonial.php?set=".$mySet."'>Write Comments</a></td></tr>";
 		}
 		
 		//echo $row["message"] . "<br>";
