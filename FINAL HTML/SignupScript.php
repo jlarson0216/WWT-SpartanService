@@ -25,6 +25,16 @@
 			$mySet=$_GET["set"];
 			date_default_timezone_set("America/Chicago");
 			$date = date("Y-m-d H:i:s", strtotime("now"));
+	
+			/*$sql4 = "SELECT * FROM Signups WHERE U_Id='".$_COOKIE["DS_UserID"]."' AND SET_Id='".$mySet."';";
+			$result4 = mysqli_query($conn, $sql4);
+			
+			if($result4->num_rows != 0)
+			{
+				echo "You are already signed up!".$result4->num_rows.".";
+				header('Location: congrats.php?error=1');
+				exit();
+			}*/
 			
 	$sql3 = "INSERT INTO Signups(U_Id, SET_Id, SignupTime)
 			VALUES(".$_COOKIE["DS_UserID"].",".$mySet.",'".$date."');";
