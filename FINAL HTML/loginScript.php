@@ -34,6 +34,7 @@
 				 	 
 			}
 	$sql = "SELECT * FROM users WHERE DeSmet_ID='".$usrName."' AND Pass='".$password."';";
+	#$sql = "SELECT * FROM users WHERE (DeSmet_ID='".$usrName."' OR Email='".$usrName."') AND Pass='".$password."';";
 	$result = mysqli_query($conn, $sql);
 			
 			if($result->num_rows == 0)
