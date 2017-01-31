@@ -77,6 +77,24 @@ if(!isset($_COOKIE["DS_UserID"]))
 
 		<div class="col-sm-10 col-md-10 col-lg-10"> 
 			<div class="container-fluid">
+				<--
+				<?php
+				if(isset($_GET["error"]))
+				{
+					if($_GET["error"]==1)
+					{
+						echo "<center><div class=\"col-sm-offset-4 col-sm-4 alert alert-danger\">
+						<strong>You have already signed up!</strong> Please try again.
+						</div></center>" ;
+						echo "<br>";
+						exit();
+					}
+				}
+				echo "<h1> Congrats! </h1>
+				
+				<h2> Thank you for signing up for this event ".$_COOKIE["DesmetFirstName"]."! We greatly appreciate your support.";
+				?>
+				-->
 					<h1> Congrats! </h1>
 					 
 					<h2> Thank you for signing up for this event 
