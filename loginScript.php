@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-
-<html>
-
-	<title>
-		Logging In...
-	</title>
-	
-	<body>
-		Please Wait, Logging In...
-		<?php
+<?php
 		
 			$usrName=$_POST["userName"];
 			
@@ -29,8 +19,8 @@
 			}		
 			//$password=password_hash($password,"sha1");   //I am not sure if we will be using this or not.
 			
-			setcookie("DS_Password",$password,time()+600,true);
-			setcookie("DS_U_Id",$usrName,time()+600,true);
+			setcookie("DS_Password",$password,time()+900,true);
+			setcookie("DS_UserName",$usrName,time()+900,true);
 			
 			$servername = "127.0.0.1";
 			$username = "root";
@@ -43,12 +33,15 @@
 				 die("Connection failed: " . mysqli_connect_error());
 				 	 
 			}
-	$sql = "SELECT U_Id, UT_Id FROM users WHERE DeSmet_ID='".$usrName."' AND Pass='".$password."';";
+	$sql = "SELECT * FROM users WHERE DeSmet_ID='".$usrName."' AND Pass='".$password."';";
 	$result = mysqli_query($conn, $sql);
 			
 			if($result->num_rows == 0)
 			{
-				echo "Not a valid user.";
+				
+				
+				echo "<script type='text/javascript'>alert('Invalid Login! Please Try Again')</script>";
+				header('Location: login.php?error=1') ;
 				
 				exit();
 			}
@@ -56,14 +49,14 @@
 			{
 				$row=$result->fetch_assoc();
 				
-				setcookie("DS_UserTypeID",$row["UT_Id"],time()+600,true);
-				setcookie("DS_UserID",$row["U_Id"],time()+600,true);
-				setcookie("DesmetEmail",$row["Email"],time()+600,true);
-				setcookie("DesmetPhoneNum",$row["Phone"],time()+600,true);
-				setcookie("DesmetFirstName",$row["firstName"],time()+600,true);
-				setcookie("DesmetLastName",$row["lastName"],time()+600,true);
-				setcookie("DesmetAddressId",$row["A_Id"],time()+600,true);
-				setcookie("DesmetUserLoggedIn","true",time()+600,true);
+				setcookie("DS_UserTypeID",$row["UT_Id"],time()+900,true);
+				setcookie("DS_UserID",$row["U_Id"],time()+900,true);
+				setcookie("DesmetEmail",$row["Email"],time()+900,true);
+				setcookie("DesmetPhoneNum",$row["Phone"],time()+900,true);
+				setcookie("DesmetFirstName",$row["FirstName"],time()+900,true);
+				setcookie("DesmetLastName",$row["LastName"],time()+900,true);
+				setcookie("DesmetAddressId",$row["A_Id"],time()+900,true);
+				setcookie("DesmetUserLoggedIn","true",time()+900,true);
 				echo "Logged in successfully!";
 				header( 'Location: index.php' ) ;
 				exit();
@@ -72,11 +65,20 @@
 			else
 			{
 				echo "Multiple users fit the discription, unable to login.";
-				
+				header( 'Location: login.php?error=1' );
 				exit();
 			}
 		
-		?>
+?>
+<!DOCTYPE html>
+<html>
+
+	<title>
+		Logging In...
+	</title>
+	
+	<body>
+	Cool
 	</body>
 
 </html>

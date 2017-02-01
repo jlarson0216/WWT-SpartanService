@@ -15,9 +15,8 @@
 <?php
 if(!isset($_COOKIE["DS_UserID"]))
 {
-	header( 'Location: login.php' ) ;
+	header( 'Location: login.php' );
 }
-
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
@@ -41,7 +40,7 @@ if (!$conn) {
 		<div class="hidden-xs  hidden-sm hidden-md col-lg-2">	
 			<img src="Media/AMDG2s.png" alt="De Smet Logo" align=right  height=100%> 
 		</div>
-	</div> <br>
+	</div><br>
 
 
 	<div class="row">
@@ -56,12 +55,12 @@ if (!$conn) {
 						if ($_COOKIE["DS_UserTypeID"] == 2 || $_COOKIE["DS_UserTypeID"] == 0 )
 						{
 							print "<li><a href='addevent.php'>Add Event</a></li>";
+							
 						}
 					}
 					
 				?>
-			</ul>
-			<br>
+			</ul><br>
 			<ul class="nav nav-pills nav-stacked">
 				<?php
 					if(isset($_COOKIE["DS_UserID"]))
@@ -80,52 +79,89 @@ if (!$conn) {
 					
 				?>
 			</ul> 
-			<br>
 		</div>
 		
-	
-
-		<div class="col-sm-10 col-md-10 col-lg-10"> 
-			<div class="container-fluid">
-				<h1> Service Projects</h1>
+		
 				
 <?php
 	
-	//echo date("Y-m-d h:i:sa");
-  $sql = "SELECT s_events.SE_Id, s_events.SE_Name, address.A_Name, s_events.Description, address.Street, address.city, address.Zip FROM s_events Join address ON s_events.A_Id=address.A_Id";
-$result = $conn->query($sql);
-
-
-
+  $sql = "SELECT S_Events.SE_Id, S_Events.SE_Name, S_Events.Description, Address.A_Name, Address.Street, Address.City, Address.State, Address.Zip
+		  FROM S_Events
+		  Join Address
+		  ON S_Events.A_Id=Address.A_Id
+		  Where s_events.SE_Id = ".$_GET['sid'].";";
+  $result = $conn->query($sql);
 if ($result->num_rows > 0) {
-    echo "<div class='table-responsive'><table style='width:100%' border='1' class='table table-responsive table-bordered table-striped'>
-  
-  <tr>
-  
-    <th>Provider</th>
-    <th>Location</th>
-    <th>Work Type</th>
-    <th>Description</th>
-                </tr>";
+    //echo "<table style='width:100%' border='1'>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
-		$Desc = $row["Description"];
-		if(strlen($Desc)>45)
-		{
-			$Desc = substr($Desc,0,45)." ...";
-		}
-		echo "<tr><td align='center'><a href = 'Signup.php?sid=".$row["SE_Id"]."'>".$row["A_Name"]."</a></td><td align='center'>".$row["Street"].", ".$row["city"]."  ".$row["Zip"]."</td><td align='center'>".$row["SE_Name"]."</td><td>".$Desc."</td></tr>";
+		
+		echo "<div class='col-sm-10 col-md-10 col-lg-10'>";
+		echo "<div class='container-fluid'>";
+		echo "<h1>" . $row["SE_Name"] . "</h1>";
+		
+		echo $row["Description"] . "<br>";
+		echo $row["A_Name"] . ", " . $row["Street"] . " " . $row["City"] . " " . $row["State"] . ", " . $row["Zip"] . "<br>";
+		
+		
+		//echo "We Need: " . $row["Volunteers"] . " Volunteers.";
+		
+		
     }
-    echo "</table> </div>";
+    //echo "</table>";
 } else {
     echo "0 results";
 }
-echo "<br>";
+//break
+	$mySid = $_GET["sid"];
+  $sql = "SELECT S_Events_Time.StartTime, S_Events_Time.EndTime, S_Events_Time.SET_Id, S_Events_Time.Volunteers
+		  FROM S_Events_Time
+		  WHERE S_Events_Time.SE_Id = ".$mySid.";";
+  $result = mysqli_query($conn,$sql);
+  
+  if ($result->num_rows> 0) {
+    echo "<table style='width:100%' border='1'>";
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+		
+		$mySet = $row["SET_Id"];
+		$sql2="SELECT Signups.SET_Id
+			   FROM Signups
+			   WHERE Signups.SET_Id=".$mySet.";";
+		$result2 = $conn->query($sql2);
+		$signedUp = $result2->num_rows;
+		$openSlots = intval($row["Volunteers"]);
+		
+		if($_COOKIE["DS_UserTypeID"] == 1){
+		
+		if($openSlots > $signedUp)
+		{
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'><a href='SignupScript.php?sid=".$mySid."&set=".$mySet."'>Signup!</a></td></tr>";
+		} else
+		{
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'>Signup!</td></tr>";
+		}
+		
+		
+		
+		} else {
+		echo "<tr><td align='center'>Start Time: " . $row["StartTime"] . "</td>" . "<td align='center'>" . " End Time: " . $row["EndTime"] . "</td>" . "<td>".$signedUp." total volunteers / ".$row['Volunteers']. " needed.</td>" . "<td align='center'><a href='Testimonial.php?set=".$mySet."'>Write Comments</a></td></tr>";
+		}
+		
+		//echo $row["message"] . "<br>";
+		
+		
+	}
+    echo "</table>";
+} else {
+    echo "0 results";
+}
+	echo "<br>";
+	
 ?>
 
 				
-			<br>	
-			</div>
+			</div>	
 		</div>
 	</div> 
 	

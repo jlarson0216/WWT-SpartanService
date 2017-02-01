@@ -1,0 +1,72 @@
+body 
+{
+	background-color: #741525;
+	color: black;
+	font-size: 18px;
+	font-family: tribuchet;
+}
+
+.col-sm-2 .col-lg-2 .col-md-2
+{
+	background-color: black;
+}
+
+.col-sm-8
+{
+	text-align: center;
+	color: #ca982c;
+	font-family: frizquabol;
+	font-size: 18px;
+}
+
+.col-sm-10 .col-md-10 .col-lg-10
+{
+	background-color: white;
+	color: #741525;
+	border: solid;
+	border-color: black;
+	border-radius: 10px;
+}
+
+
+hr
+{
+	margin: 10px;
+}
+
+
+footer
+{
+	background-color: black;
+	color:white;
+	text-align: center;
+}
+
+.nav-pills
+{
+	background-color:#CA982C;
+	border-radius: 8px;
+}
+
+
+.nav-stacked > li > a
+{
+	color: #741525;
+	background-color:#CA982C;
+}
+
+h1
+{
+	text-align: center;
+	
+}
+
+u
+{
+	color: #CA982C;
+}
+a:focus{
+	color: white;
+	background-color: white;
+}
+.glyphicon-user:before{content:"\e008"}
